@@ -79,6 +79,10 @@ app.put("/joke/:id", async (req, res) => {
   }
 });
 //6. PATCH a joke
+app.patch("/", async (req, res) => {
+  try {
+  } catch (error) {}
+});
 
 //7. DELETE Specific joke
 
