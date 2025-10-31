@@ -81,12 +81,22 @@ app.put("/joke/:id", async (req, res) => {
 //6. PATCH a joke
 app.patch("/jokes/:id", async (req, res) => {
   try {
-    const id=Number(req.params.id);
-   const text=req.body.text;
-    const type=req.body.type;
-    const joke=jokes.find(())
-    
-  } catch (error) {}
+    const id = Number(req.params.id);
+    const text = req.body.text;
+    const type = req.body.type;
+    const joke = jokes.find((item) => item.id === id);
+    if (!joke) throw new Error("No joke Found");
+    if (type) {
+      joke.jokeType = type;
+    }
+    if (text) {
+      joke.jokeText = text;
+    }
+
+    res.status(200).json({ msg: "Successfully Updated", joke: joke });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 //7. DELETE Specific joke
