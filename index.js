@@ -79,8 +79,13 @@ app.put("/joke/:id", async (req, res) => {
   }
 });
 //6. PATCH a joke
-app.patch("/", async (req, res) => {
+app.patch("/jokes/:id", async (req, res) => {
   try {
+    const id=Number(req.params.id);
+   const text=req.body.text;
+    const type=req.body.type;
+    const joke=jokes.find(())
+    
   } catch (error) {}
 });
 
