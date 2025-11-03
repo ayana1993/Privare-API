@@ -99,9 +99,34 @@ app.patch("/jokes/:id", async (req, res) => {
   }
 });
 
-//7. DELETE Specific joke
-
 //8. DELETE All jokes
+app.delete("/delete/all", async (req, res) => {
+  try {
+    const key = req.query.key;
+    if (!key) throw new Error("Master Key required for this operation");
+    if (key !== masterKey) throw new Error("Incorrect API Key");
+    jokes.length = 0;
+    res.status(200).json({ msg: "All items deleted..!!!!", jokes: jokes });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//7. DELETE Specific joke
+app.delete("/jokes/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const joke = jokes.find((item) => item.id === id);
+    if (!joke) throw new Error("Joke not Found");
+    const newJokes = jokes.filter((item) => item.id !== id);
+    jokes = newJokes;
+    // const deleteID = id - 1;
+    // jokes.splice(deleteID, 1);
+    res.status(200).json({ msg: "Joke Deleted Successfully..!!!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
